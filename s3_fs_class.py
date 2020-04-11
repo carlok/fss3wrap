@@ -46,7 +46,12 @@ class S3FsClass(AbstractFSClass):
 
     def file_read(self, source_path, source_file, destination_path, destination_file):
          # copy s3://bbb to LOCAL/ccc
-        copy_file(self.s3_fs, source_file, source_path, '{}/{}'.format(destination_path, destination_file))
+        copy_file(
+            self.s3_fs,
+            '{}/{}'.format(source_path, source_file),
+            self.os_fs,
+            '{}/{}'.format(destination_path, destination_file)
+        )
 
         os_fs = open_fs('osfs://.')
         with os_fs.open('{}/{}'.format(destination_path, destination_file)) as local_file:
