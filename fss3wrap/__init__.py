@@ -1,0 +1,1 @@
+from fss3wrap.afs_interface import Afs
