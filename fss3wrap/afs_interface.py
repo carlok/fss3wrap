@@ -1,5 +1,5 @@
-from os_fs_class import OsFsClass
-from s3_fs_class import S3FsClass
+from fss3wrap.os_fs_class import OsFsClass
+from fss3wrap.s3_fs_class import S3FsClass
 
 class Afs():
 

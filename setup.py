@@ -9,7 +9,7 @@ setup(
   author = 'Carlo Perassi',
   author_email = 'carlo.perassi@kiwifarm.it',
   url = 'https://github.com/carlok/fss3wrap',
-  download_url = 'https://github.com/carlok/fss3wrap/archive/v_0.1.2.tar.gz',
+  download_url = 'https://github.com/carlok/fss3wrap/archive/v_0.1.3.tar.gz',
   keywords = ['fs', 's3', 'wrapper'],
   install_requires=[
       'fs',
