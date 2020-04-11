@@ -2,14 +2,14 @@ from distutils.core import setup
 setup(
   name = 'fss3wrap',
   packages = ['fss3wrap'],
-  version = '0.1.2',
+  version = '0.1.4',
   license='MIT',
   description = 'A python class to wrap fs and fs-s3fs (WIP)',
   long_description = 'A python class to wrap fs and fs-s3fs (WIP)',
   author = 'Carlo Perassi',
   author_email = 'carlo.perassi@kiwifarm.it',
   url = 'https://github.com/carlok/fss3wrap',
-  download_url = 'https://github.com/carlok/fss3wrap/archive/v_0.1.3.tar.gz',
+  download_url = 'https://github.com/carlok/fss3wrap/archive/v_0.1.4.tar.gz',
   keywords = ['fs', 's3', 'wrapper'],
   install_requires=[
       'fs',
