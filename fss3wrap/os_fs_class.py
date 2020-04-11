@@ -1,4 +1,4 @@
-from abstract_fs_class import AbstractFSClass
+from fss3wrap.abstract_fs_class import AbstractFSClass
 
 from fs import open_fs
 from fs.base import FS
