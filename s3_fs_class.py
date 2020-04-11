@@ -4,6 +4,8 @@ from fs import open_fs
 from fs.base import FS
 from fs.copy import copy_file
 
+import ntpath
+
 class S3FsClass(AbstractFSClass):
 
     os_fs = None
@@ -25,11 +27,15 @@ class S3FsClass(AbstractFSClass):
     def directory_list(self, path):
         return self.s3_fs.listdir(path)
 
-    def file_copy(self, source_path, destination_path, source_file, destination_file):
+    def file_copy(self, source_path, source_file, destination_path, destination_file):
         self.s3_fs.makedirs(destination_path, recreate=True)
         with open('{}/{}'.format(source_path, source_file), 'rb') as read_file:
             # copy LOCAL/bbb to s3://bbb
             self.s3_fs.upload('{}/{}'.format(destination_path, destination_file), read_file)
+
+    def file_descriptor_copy(self, source_file_descriptor, destination_path, destination_file):
+        source_path, source_file = ntpath.split(source_file_descriptor.name)
+        self.file_copy(source_path, source_file, destination_path, destination_file)
 
     def file_remove(self, file_path, file_name):
         self.s3_fs.remove('{}/{}'.format(file_path, file_name))

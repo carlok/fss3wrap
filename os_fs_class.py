@@ -4,6 +4,10 @@ from fs import open_fs
 from fs.base import FS
 from fs.copy import copy_file
 
+import ntpath
+import shutil
+
+
 class OsFsClass(AbstractFSClass):
 
     os_fs = None
@@ -17,7 +21,7 @@ class OsFsClass(AbstractFSClass):
     def directory_list(self, path):
         return self.os_fs.listdir(path)
 
-    def file_copy(self, source_path, destination_path, source_file, destination_file):
+    def file_copy(self, source_path, source_file, destination_path, destination_file):
         self.os_fs.makedirs(destination_path, recreate=True)
         copy_file(
             self.os_fs,
@@ -25,6 +29,11 @@ class OsFsClass(AbstractFSClass):
             self.os_fs,
             '{}/{}'.format(destination_path, destination_file)
         )
+
+    def file_descriptor_copy(self, source_file_descriptor, destination_path, destination_file):
+        source_path, source_file = ntpath.split(source_file_descriptor.name)
+        self.os_fs.makedirs(destination_path, recreate=True)
+        shutil.copyfile('{}/{}'.format(source_path, source_file), '{}/{}'.format(destination_path, destination_file))
 
     def file_remove(self, file_path, file_name):
         self.os_fs.remove('{}/{}'.format(file_path, file_name))

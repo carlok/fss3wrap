@@ -15,7 +15,7 @@ s3_parameters = {
 s3_fs = S3FsClass(s3_parameters)
 
 # s3_fs.bytes_write('ccc1', b"some initial binary data: \x00\x01")
-# s3_fs.file_copy('./', './', 'README.md', 'README.md')
+# s3_fs.file_copy('./local', 'bbb', './remote/1/2', 'ccc_dest2')
 # s3_fs.file_remove('.', 'bbb')
 # print(s3_fs.directory_list('./'))
 # print(s3_fs.file_md5('.', 'README.md'))

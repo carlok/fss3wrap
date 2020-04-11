@@ -20,7 +20,11 @@ class AbstractFSClass(ABC):
         pass
 
     @abstractmethod
-    def file_copy(self, source_path, destination_path, source_file, destination_file):
+    def file_copy(self, source_path, source_file, destination_path, destination_file):
+        pass
+
+    @abstractmethod
+    def file_descriptor_copy(self, source_file_descriptor, destination_path, destination_file):
         pass
 
     @abstractmethod
