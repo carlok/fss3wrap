@@ -13,8 +13,8 @@ class Afs():
         else:
             self.afs = OsFsClass()
 
-    def bytes_write(self, mfile, mbytes):
-        self.afs.bytes_write(mfile, mbytes)
+    def bytes_write(self, destination_path, destination_file, mbytes):
+        self.afs.bytes_write(destination_path, destination_file, mbytes)
 
     def directory_list(self, path):
         return self.afs.directory_list(path)

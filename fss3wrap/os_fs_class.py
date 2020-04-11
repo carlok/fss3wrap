@@ -15,8 +15,9 @@ class OsFsClass(AbstractFSClass):
     def __init__(self, s3_parameters = None):
         self.os_fs = open_fs('osfs://.')
 
-    def bytes_write(self, mfile, mbytes):
-        self.os_fs.writebytes(mfile, mbytes)
+    def bytes_write(self, destination_path, destination_file, mbytes):
+        self.os_fs.makedirs(destination_path, recreate=True)
+        self.os_fs.writebytes('{}/{}'.format(destination_path, destination_file), mbytes)
 
     def directory_list(self, path):
         return self.os_fs.listdir(path)

@@ -21,8 +21,9 @@ class S3FsClass(AbstractFSClass):
             )
         )
 
-    def bytes_write(self, mfile, mbytes):
-        self.s3_fs.writebytes(mfile, mbytes)
+    def bytes_write(self, destination_path, destination_file, mbytes):
+        self.s3_fs.makedirs(destination_path, recreate=True)
+        self.s3_fs.writebytes('{}/{}'.format(destination_path, destination_file), mbytes)
 
     def directory_list(self, path):
         return self.s3_fs.listdir(path)

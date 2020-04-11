@@ -12,7 +12,7 @@ class AbstractFSClass(ABC):
         self.s3_parameters = s3_parameters
 
     @abstractmethod
-    def bytes_write(self, mfile, mbytes):
+    def bytes_write(self, destination_path, destination_file, mbytes):
         pass
 
     @abstractmethod
