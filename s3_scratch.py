@@ -2,16 +2,11 @@
 #   dati aws, dati fs (remote path) e flag quale usare (val da env) così interf comune
 # Dentro la classe, su flag istanza, un obi o un altro delle _2 classi nascoste
 
-# faccio classe astratta (costruttore con tipo/stringa e oggetto/defaultVuoto)
-#   lettura
-#   scrittura da byteIO
-#   scrittura da file descriptor (?)
-#   scrittura da file
-#   md5
 # faccio classe specifica di wrap di s3 con try/catch per ciascun metodo
 # faccio classe specifica di wrap di posix con try/catch per ciascun metodo
 # faccio provino di uso di wrap s3
 # faccio provino di uso di wrap posix
+# test con nomi parametri espliciti
 # se ok, creo pacchetto
 #  https://dev.to/rf_schubert/how-to-create-a-pip-package-and-host-on-private-github-repo-58pa
 #  o
@@ -48,7 +43,7 @@ s3_fs.writebytes('mbytes', b"some initial binary data: \x00\x01")
 #
 # read
 #
-copy_file(s3_fs, 'bbb', './', '{}ccc'.format(os.getenv('FS_PATH_LOCAL'))) # copy s3://bbb to LCOAL/ccc
+copy_file(s3_fs, 'bbb', './', '{}ccc'.format(os.getenv('FS_PATH_LOCAL'))) # copy s3://bbb to LOCAL/ccc
 # TODO following on success
 os_fs = open_fs('osfs://.')
 with os_fs.open('{}ccc'.format(os.getenv('FS_PATH_LOCAL'))) as local_file:
