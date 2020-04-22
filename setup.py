@@ -5,7 +5,7 @@ with open("README.rst", "rt") as f:
     DESCRIPTION = f.read()
 
 url = 'https://github.com/carlok/fss3wrap'
-version='0.1.8'
+version='0.1.9'
 
 setup(
   name = 'fss3wrap',
@@ -22,6 +22,7 @@ setup(
   install_requires=[
       'fs',
       'fs-s3fs',
+      'wheel'
   ],
   classifiers=[
     'Development Status :: 3 - Alpha',  # "3 - Alpha", "4 - Beta", "5 - Production/Stable"
