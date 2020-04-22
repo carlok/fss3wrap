@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-from distutils.core import setup
+# from distutils.core import setup
+from setuptools import setup
 
 with open("README.rst", "rt") as f:
     DESCRIPTION = f.read()
 
 url = 'https://github.com/carlok/fss3wrap'
-version='0.1.9'
+version='0.1.10'
 
 setup(
   name = 'fss3wrap',

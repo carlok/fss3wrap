@@ -1,5 +1,6 @@
-.coverage
+*.egg-info/
 .DS_Store
+.coverage
 .env
 .pytest_cache/
 .vscode/
