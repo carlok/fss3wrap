@@ -13,7 +13,7 @@ class S3FsClass(AbstractFSClass):
     s3_fs = None
 
     def __init__(self, s3_parameters):
-        self.os_fs = open_fs('osfs://.')
+        self.os_fs = open_fs('osfs://')
         self.s3_fs = open_fs(
             's3://{}:{}@{}'.format(
                 s3_parameters['access_key_id'],
@@ -58,13 +58,13 @@ class S3FsClass(AbstractFSClass):
     def file_read(self, source_path, source_file,
                   destination_path, destination_file):
          # copy s3://bbb to LOCAL/ccc
+        self.os_fs = open_fs('osfs://{}'.format(destination_path))
         copy_file(
             self.s3_fs,
             '{}/{}'.format(source_path, source_file),
             self.os_fs,
-            '{}/{}'.format(destination_path, destination_file)
+            destination_file
         )
 
-        os_fs = open_fs('osfs://.')
-        with os_fs.open('{}/{}'.format(destination_path, destination_file)) as local_file:
+        with self.os_fs.open(destination_file) as local_file:
             return local_file.read()

@@ -13,7 +13,7 @@ class OsFsClass(AbstractFSClass):
     os_fs = None
 
     def __init__(self, s3_parameters=None):
-        self.os_fs = open_fs('osfs://.')
+        self.os_fs = open_fs('osfs://')
 
     def bytes_write(self, destination_path, destination_file, mbytes):
         self.os_fs.makedirs(destination_path, recreate=True)
@@ -25,12 +25,15 @@ class OsFsClass(AbstractFSClass):
 
     def file_copy(self, source_path, source_file,
                   destination_path, destination_file):
+        self.os_fs_destination = open_fs('osfs://{}'.format(destination_path))
+        self.os_fs_source = open_fs('osfs://{}'.format(source_path))
+
         self.os_fs.makedirs(destination_path, recreate=True)
         copy_file(
-            self.os_fs,
-            '{}/{}'.format(source_path, source_file),
-            self.os_fs,
-            '{}/{}'.format(destination_path, destination_file)
+            self.os_fs_source,
+            source_file,
+            self.os_fs_destination,
+            destination_file
         )
 
     def file_descriptor_copy(self, source_file_descriptor,
@@ -44,9 +47,11 @@ class OsFsClass(AbstractFSClass):
         self.os_fs.remove('{}/{}'.format(file_path, file_name))
 
     def file_md5(self, file_path, file_name):
-        return self.os_fs.hash('{}/{}'.format(file_path, file_name), 'md5')
+        self.os_fs = open_fs('osfs://{}'.format(file_path))
+        return self.os_fs.hash(file_name, 'md5')
 
     def file_read(self, source_path, source_file,
                   destination_path=None, destination_file=None):
-        with self.os_fs.open('{}/{}'.format(source_path, source_file)) as local_file:
+        self.os_fs = open_fs('osfs://{}'.format(source_path))
+        with self.os_fs.open(source_file) as local_file:
             return local_file.read()
