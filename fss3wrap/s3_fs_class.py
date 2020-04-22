@@ -12,8 +12,8 @@ class S3FsClass(AbstractFSClass):
     os_fs = None
     s3_fs = None
 
-    def __init__(self, s3_parameters):
-        self.reinit(s3_parameters)
+    def __init__(self, s3_parameters, bucket=None, rootdir=None):
+        self.reinit(s3_parameters, bucket,rootdir)
 
     def bytes_write(self, destination_path, destination_file, mbytes):
         self.s3_fs.makedirs(destination_path, recreate=True)
@@ -47,6 +47,9 @@ class S3FsClass(AbstractFSClass):
         info = self.s3_fs.getinfo(
             '{}/{}'.format(file_path, file_name), namespaces=['s3'])
         return info.raw['s3']['e_tag'][1:-1]
+    
+    def file_fd(self,  file_path, file_name):
+        return self.s3_fs.open('{}/{}'.format(file_path, file_name))
 
     def file_read(self, source_path, source_file,
                   destination_path, destination_file):
@@ -62,12 +65,12 @@ class S3FsClass(AbstractFSClass):
         with self.os_fs.open(destination_file) as local_file:
             return local_file.read()
 
-    def reinit(self, s3_parameters):
+    def reinit(self, s3_parameters, bucket=None, rootdir=None):
         self.os_fs = open_fs('osfs://')
         self.s3_fs = open_fs(
             's3://{}:{}@{}'.format(
                 s3_parameters['access_key_id'],
                 s3_parameters['secret_access_key'],
-                s3_parameters['bucket']
+                bucket if bucket is not None else s3_parameters['bucket'] 
             )
         )

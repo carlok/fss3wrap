@@ -21,7 +21,6 @@ def test_bytes_write():
         destination_path = os.getenv('FS_PATH_REMOTE')
         destination_file = 'out_LICENSE'
         mbytes = b"some initial binary data: \x00\x01"
-
         afs.bytes_write(destination_path, destination_file, mbytes)
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
@@ -99,6 +98,30 @@ def test_file_read():
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
 
+def test_file_fd():
+    try:
+        source_path = os.getenv('FS_PATH_REMOTE')
+        source_file = 'out2_LICENSE'
+
+        print(
+            afs.file_fd(
+                source_path,
+                source_file).read())
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))        
+
+def test_file_fd_custom_bucket():
+    try:
+        custom_bucket = os.getenv('AWS_CUSTOM_BUCKET')
+        source_path = os.getenv('FS_PATH_REMOTE')
+        source_file = 'out2_LICENSE'
+        afs = Afs(s3_used, s3_parameters, bucket=custom_bucket)
+        print(
+            afs.file_fd(
+                source_path,
+                source_file).read())
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))      
 
 def test_reinit():
     try:
