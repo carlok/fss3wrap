@@ -98,3 +98,28 @@ def test_file_read():
                 destination_file))
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
+
+
+def test_reinit():
+    try:
+        s3_parameters = {
+            'access_key_id': os.getenv('AWS_ACCESS_KEY_ID'),
+            'secret_access_key': os.getenv('AWS_SECRET_ACCESS_KEY'),
+            'bucket': os.getenv('DESTINATION_BASE')
+        }
+        afs.reinit(s3_used, s3_parameters)
+
+        """
+        source_path = os.getenv('FS_PATH_LOCAL')
+        source_file = 'LICENSE'
+        destination_path = os.getenv('FS_PATH_REMOTE')
+        destination_file = 'out_LICENSE'
+
+        afs.file_copy(
+            source_path,
+            source_file,
+            destination_path,
+            destination_file)
+        """
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))

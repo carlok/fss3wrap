@@ -13,7 +13,7 @@ class OsFsClass(AbstractFSClass):
     os_fs = None
 
     def __init__(self, s3_parameters=None):
-        self.os_fs = open_fs('osfs://')
+        self.reinit()
 
     def bytes_write(self, destination_path, destination_file, mbytes):
         self.os_fs.makedirs(destination_path, recreate=True)
@@ -55,3 +55,6 @@ class OsFsClass(AbstractFSClass):
         self.os_fs = open_fs('osfs://{}'.format(source_path))
         with self.os_fs.open(source_file) as local_file:
             return local_file.read()
+
+    def reinit(self):
+        self.os_fs = open_fs('osfs://')

@@ -34,6 +34,7 @@ Afs interface class methods
 * ``file_remove(file_path, file_name)``
 * ``file_md5(file_path, file_name)``
 * ``file_read(source_path, source_file, destination_path, destination_file)``
+* ``reinit(s3_used, s3_parameters)``
 
 A note on the tests
 -------------------
@@ -57,6 +58,7 @@ A few words on each test:
 * ``test_file_remove``\ : deletes ``remote/out_LICENSE``
 * ``test_file_md5``\ : returns the md5 string of ``remote/out2_LICENSE``
 * ``test_file_read``\ : returns as a string the content of ``remote/out2_LICENSE`` after having copied it in ``local/LICENSE_from_remote``
+* ``test_reinit``\ : changes bucket if ``s3_used`` is ``True``
 
 Author
 ------

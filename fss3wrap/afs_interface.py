@@ -8,11 +8,7 @@ class Afs():
     s3 = False
 
     def __init__(self, s3, s3_parameters):
-        if s3 is True:
-            self.afs = S3FsClass(s3_parameters)
-            self.s3 = True
-        else:
-            self.afs = OsFsClass()
+        self.reinit(s3, s3_parameters)
 
     def bytes_write(self, destination_path, destination_file, mbytes):
         self.afs.bytes_write(destination_path, destination_file, mbytes)
@@ -48,3 +44,10 @@ class Afs():
                 source_path, source_file, destination_path, destination_file)
         else:
             return self.afs.file_read(source_path, source_file)
+
+    def reinit(self, s3, s3_parameters):
+        if s3 is True:
+            self.afs = S3FsClass(s3_parameters)
+            self.s3 = True
+        else:
+            self.afs = OsFsClass()
