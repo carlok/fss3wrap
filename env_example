@@ -4,7 +4,7 @@ AWS_BUCKET='bucket-aaa'
 AWS_CUSTOM_BUCKET='bucket-bbb'
 AWS_S3_USED=True
 
-DESTINATION_BASE='bucket-bbb'
+DESTINATION_BASE='bucket-ccc'
 
 FS_PATH_LOCAL='./local'
 FS_PATH_REMOTE='./remote'

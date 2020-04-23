@@ -2,7 +2,7 @@
 
 ```
 autopep8 --in-place --aggressive --recursive <folder>
-pytest --color=yes --cov=fss3wrap/ -s -v
+pytest --cache-clear --color=yes --cov=fss3wrap/ -s -v
 m2r README.md
 
 python setup.py sdist

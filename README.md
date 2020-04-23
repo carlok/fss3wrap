@@ -42,7 +42,7 @@ Files needed to begin:
 A few words on each test:
 * `test_bytes_write`: creates `remote/out_LICENSE`
 * `test_directory_list`: lists `remote/`
-* `test_filecopy`: copies `local/LICENSE` to `remote/out_LICENSE`
+* `test_file_copy`: copies `local/LICENSE` to `remote/out_LICENSE`
 * `test_file_descriptor_copy`: same as `test_filecopy` but using a file descriptor
 * `test_file_remove`: deletes `remote/out_LICENSE`
 * `test_file_md5`: returns the md5 string of `remote/out2_LICENSE`
