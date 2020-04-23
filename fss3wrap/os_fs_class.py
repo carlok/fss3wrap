@@ -12,8 +12,8 @@ class OsFsClass(AbstractFSClass):
 
     os_fs = None
 
-    def __init__(self, s3_parameters=None):
-        self.reinit()
+    def __init__(self, bucket=None, rootdir=None):
+        self.reinit(bucket, rootdir)
 
     def bytes_write(self, destination_path, destination_file, mbytes):
         self.os_fs.makedirs(destination_path, recreate=True)
@@ -25,8 +25,8 @@ class OsFsClass(AbstractFSClass):
 
     def file_copy(self, source_path, source_file,
                   destination_path, destination_file):
-        self.os_fs_destination = open_fs('osfs://{}'.format(destination_path))
-        self.os_fs_source = open_fs('osfs://{}'.format(source_path))
+        self.os_fs_destination = open_fs(self.fs_root+destination_path)
+        self.os_fs_source = open_fs(self.fs_root+source_path)
 
         self.os_fs.makedirs(destination_path, recreate=True)
         copy_file(
@@ -47,14 +47,21 @@ class OsFsClass(AbstractFSClass):
         self.os_fs.remove('{}/{}'.format(file_path, file_name))
 
     def file_md5(self, file_path, file_name):
-        self.os_fs = open_fs('osfs://{}'.format(file_path))
+        self.os_fs = open_fs(self.fs_root+file_path)
         return self.os_fs.hash(file_name, 'md5')
+
+    def file_fd(self,  file_path, file_name):
+        self.os_fs = open_fs(self.fs_root+file_path)
+        return self.os_fs.open(file_name)
 
     def file_read(self, source_path, source_file,
                   destination_path=None, destination_file=None):
-        self.os_fs = open_fs('osfs://{}'.format(source_path))
+        self.os_fs = open_fs(self.fs_root+source_path)
         with self.os_fs.open(source_file) as local_file:
             return local_file.read()
 
-    def reinit(self):
-        self.os_fs = open_fs('osfs://')
+    def reinit(self, bucket=None, rootdir=None):
+        self.fs_root = 'osfs://'
+        self.fs_root += (rootdir+'/') if rootdir is not None else ''
+        self.fs_root += (bucket+'/') if bucket is not None else ''
+        self.os_fs = open_fs(self.fs_root)

@@ -27,6 +27,10 @@ class AbstractFSClass(ABC):
     @abstractmethod
     def file_md5(self, file_path, file_name):
         pass
+    
+    @abstractmethod
+    def file_fd(self,  file_path, file_name):
+        pass
 
     @abstractmethod
     def file_read(self, source_path, source_file,

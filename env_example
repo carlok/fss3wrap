@@ -1,6 +1,7 @@
 AWS_ACCESS_KEY_ID='aaa'
 AWS_SECRET_ACCESS_KEY='aaa'
 AWS_BUCKET='bucket-aaa'
+AWS_CUSTOM_BUCKET='bucket-bbb'
 AWS_S3_USED=True
 
 DESTINATION_BASE='bucket-bbb'
