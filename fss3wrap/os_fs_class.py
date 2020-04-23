@@ -52,14 +52,22 @@ class OsFsClass(AbstractFSClass):
         priv_os_fs = open_fs(self.fs_root + file_path)
         return priv_os_fs.open(file_name)
 
+    def file_fd_bin(self, file_path, file_name):
+        priv_os_fs = open_fs(self.fs_root + file_path)
+        return priv_os_fs.openbin(file_name)
+
     def file_md5(self, file_path, file_name):
         priv_os_fs = open_fs(self.fs_root + file_path)
         return priv_os_fs.hash(file_name, 'md5')
 
-    def file_read(self, source_path, source_file,
-                  destination_path=None, destination_file=None):
+    def file_read(self, source_path, source_file):
         priv_os_fs = open_fs(self.fs_root + source_path)
         with priv_os_fs.open(source_file) as local_file:
+            return local_file.read()
+
+    def file_read_bin(self, source_path, source_file):
+        priv_os_fs = open_fs(self.fs_root + source_path)
+        with priv_os_fs.openbin(source_file) as local_file:
             return local_file.read()
 
     def file_remove(self, file_path, file_name):

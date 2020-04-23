@@ -43,23 +43,31 @@ class S3FsClass(AbstractFSClass):
     def file_fd(self, file_path, file_name):
         return self.s3_fs.open('{}/{}'.format(file_path, file_name))
 
+    def file_fd_bin(self, file_path, file_name):
+        return self.s3_fs.openbin('{}/{}'.format(file_path, file_name))
+
     def file_md5(self, file_path, file_name):
         info = self.s3_fs.getinfo(
             '{}/{}'.format(file_path, file_name), namespaces=['s3'])
         return info.raw['s3']['e_tag'][1:-1]
 
-    def file_read(self, source_path, source_file,
-                  destination_path, destination_file):
-         # copy s3://bbb to LOCAL/ccc
-        priv_os_fs = open_fs('osfs://{}'.format(destination_path))
-        copy_file(
-            self.s3_fs,
-            '{}/{}'.format(source_path, source_file),
-            priv_os_fs,
-            destination_file
-        )
+    def file_read(self, source_path, source_file):
+        # copy s3://bbb to LOCAL/ccc
+        #        priv_os_fs = open_fs('osfs://{}'.format(destination_path))
+        #        copy_file(
+        #            self.s3_fs,
+        #            '{}/{}'.format(source_path, source_file),
+        #            priv_os_fs,
+        #            destination_file
+        #        )
+        #
+        #        with self.os_fs.open(destination_file) as local_file:
+        #            return local_file.read()
+        with self.s3_fs.open('{}/{}'.format(source_path, source_file)) as local_file:
+            return local_file.read()
 
-        with self.os_fs.open(destination_file) as local_file:
+    def file_read_bin(self, source_path, source_file):
+        with self.s3_fs.openbin('{}/{}'.format(source_path, source_file)) as local_file:
             return local_file.read()
 
     def file_remove(self, file_path, file_name):

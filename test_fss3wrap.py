@@ -6,6 +6,19 @@ from fss3wrap.afs_interface import Afs
 import pytest
 
 
+# [x] FS [x] S3 : test_bytes_write
+# [x] FS [x] S3 : test_directory_list
+# [x] FS_BIN [x] FS_TXT [x] S3_BIN [x] S3_TXT : test_file_copy
+# [x] FS_BIN [x] FS_TXT [x] S3_BIN [x] S3_TXT : test_file_descriptor_copy
+# [x] FS_BIN [x] S3_BIN : test_file_fd_bin
+# [x] FS_TXT [x] S3_TXT : test_file_fd_text
+# [x] FS_BIN [x] S3_BIN : test_file_fd_custom_bucket_bin
+# [x] FS_BIN [x] S3_BIN : test_file_md5
+# [x] FS_BIN [x] S3_BIN : test_file_read_bin
+# [x] FS_BIN [x] S3_BIN : test_file_read_text
+# [x] FS_BIN [x] S3_BIN : test_file_remove
+# [x] FS_BIN [x] S3_BIN : test_reinit
+
 load_dotenv(override=True)
 
 pytest.aws_bucket_1 = os.getenv('AWS_BUCKET_1')
@@ -20,11 +33,10 @@ pytest.s3_parameters = {
     'bucket': pytest.aws_bucket_1
 }
 
-s3_used = (os.getenv('AWS_S3_USED') == 'True')
+pytest.s3_used = (os.getenv('AWS_S3_USED') == 'True')
 
-pytest.afs = Afs(s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pytest.fs_path_remote)
+pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pytest.fs_path_remote)
 
-"""
 def test_bytes_write():
     try:
         destination_path = 'extra_sub_folder'
@@ -74,6 +86,17 @@ def test_file_descriptor_copy():
         pytest.fail("BaseException => {}".format(str(e)))
 
 
+def test_file_fd_bin():
+    try:
+        destination_path = 'extra_sub_folder'
+        destination_file = '4x4.jpg'
+
+        fd_bin = pytest.afs.file_fd_bin(destination_path, destination_file)
+        print(fd_bin.read().hex())
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+
+
 def test_file_fd_text():
     try:
         destination_path = 'extra_sub_folder'
@@ -85,56 +108,54 @@ def test_file_fd_text():
                 destination_file).read())
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
-"""
-
-# [x] FS [x] S3 : test_bytes_write
-# [x] FS [x] S3 : test_directory_list
-# [x] FS_BIN [x] FS_TXT [x] S3_BIN [x] S3_TXT : test_file_copy
-# [x] FS_BIN [x] FS_TXT [x] S3_BIN [x] S3_TXT : test_file_descriptor_copy
-# [x] FS_TXT [x] S3_TXT : test_file_fd_text
-# test_file_fd_binary: TODO
-# 
 
 
-def test_file_fd_custom_bucket():
+def test_file_fd_custom_bucket_bin():
     try:
-        custom_bucket = os.getenv('AWS_BUCKET_2')
-        source_path = os.getenv('FS_PATH_REMOTE')
-        source_file = 'out2_LICENSE'
-        afs = Afs(s3_used, s3_parameters, bucket=custom_bucket)
+        custom_bucket = pytest.aws_bucket_2
 
-        print(
-            afs.file_fd(
-                source_path,
-                source_file).read())
+
+        destination_path = 'extra_sub_folder'
+        destination_file = '4x4.jpg'
+        pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, custom_bucket, pytest.fs_path_remote)
+
+        fd_bin = pytest.afs.file_fd_bin(destination_path, destination_file)
+        print(fd_bin.read().hex())
+
+        # reset
+        pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pytest.fs_path_remote)
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
 
 
-"""
 def test_file_md5():
     try:
         file_path = 'extra_sub_folder'
-        file_name = 'out_LICENSE'
+        file_name = '4x4.jpg'
 
-        print(afs.file_md5(file_path, file_name))
+        print(pytest.afs.file_md5(file_path, file_name))
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
 
 
-def test_file_read():
+def test_file_read_bin():
     try:
-        source_path = os.getenv('FS_PATH_REMOTE')
-        source_file = 'out2_LICENSE'
-        destination_path = os.getenv('FS_PATH_LOCAL')
-        destination_file = 'LICENSE_from_remote'
+        destination_path = 'extra_sub_folder'
+        destination_file = '4x4.jpg'
 
-        print(
-            afs.file_read(
-                source_path,
-                source_file,
-                destination_path,
-                destination_file))
+        fread = pytest.afs.file_read_bin(destination_path, destination_file)
+        print(fread)
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+
+
+def test_file_read_text():
+    try:
+        destination_path = 'extra_sub_folder'
+        destination_file = 'out_LICENSE'
+
+        fread = pytest.afs.file_read(destination_path, destination_file)
+        print(fread)
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
 
@@ -151,23 +172,17 @@ def test_file_remove():
 
 def test_reinit():
     try:
-        s3_parameters = {
-            'access_key_id': os.getenv('AWS_ACCESS_KEY_ID'),
-            'secret_access_key': os.getenv('AWS_SECRET_ACCESS_KEY'),
-            'bucket': os.getenv('AWS_BUCKET_2')
-        }
-        afs.reinit(s3_used, s3_parameters)
+        pytest.afs.reinit(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_2, pytest.fs_path_remote)
 
-        source_path = os.getenv('FS_PATH_LOCAL')
+        source_path = pytest.fs_path_local
         source_file = 'LICENSE'
-        destination_path = os.getenv('FS_PATH_REMOTE')
+        destination_path = 'extra_sub_folder'
         destination_file = 'out_LICENSE'
 
-        afs.file_copy(
+        pytest.afs.file_copy(
             source_path,
             source_file,
             destination_path,
             destination_file)
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
-"""

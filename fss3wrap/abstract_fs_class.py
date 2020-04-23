@@ -25,12 +25,19 @@ class AbstractFSClass(ABC):
         pass
 
     @abstractmethod
+    def file_fd_bin(self, file_path, file_name):
+        pass
+
+    @abstractmethod
     def file_md5(self, file_path, file_name):
         pass
 
     @abstractmethod
-    def file_read(self, source_path, source_file,
-                  destination_path, destination_file):
+    def file_read(self, source_path, source_file):
+        pass
+
+    @abstractmethod
+    def file_read_bin(self, source_path, source_file):
         pass
 
     @abstractmethod
@@ -38,5 +45,5 @@ class AbstractFSClass(ABC):
         pass
 
     @abstractmethod
-    def reinit(self, s3_parameters, bucket, rootdir):
+    def reinit(self, s3, s3_parameters, bucket, rootdir):
         pass

@@ -1,10 +1,10 @@
-AWS_ACCESS_KEY_ID='aaa'
-AWS_SECRET_ACCESS_KEY='aaa'
-AWS_BUCKET='bucket-aaa'
-AWS_CUSTOM_BUCKET='bucket-bbb'
-AWS_S3_USED=True
+AWS_ACCESS_KEY_ID=''
+AWS_SECRET_ACCESS_KEY=''
 
-DESTINATION_BASE='bucket-ccc'
+AWS_BUCKET_1=''
+AWS_BUCKET_2=''
 
-FS_PATH_LOCAL='./local'
-FS_PATH_REMOTE='./remote'
+AWS_S3_USED=False
+
+FS_PATH_LOCAL='/tmp/local'
+FS_PATH_REMOTE='/tmp/remote'

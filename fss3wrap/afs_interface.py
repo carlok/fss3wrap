@@ -34,16 +34,17 @@ class Afs():
     def file_fd(self, file_path, file_name):
         return self.afs.file_fd(file_path, file_name)
 
+    def file_fd_bin(self, file_path, file_name):
+        return self.afs.file_fd_bin(file_path, file_name)
+
     def file_md5(self, file_path, file_name):
         return self.afs.file_md5(file_path, file_name)
 
-    def file_read(self, source_path, source_file,
-                  destination_path, destination_file):
-        if self.s3 is True:
-            return self.afs.file_read(
-                source_path, source_file, destination_path, destination_file)
-        else:
-            return self.afs.file_read(source_path, source_file)
+    def file_read(self, source_path, source_file):
+        return self.afs.file_read(source_path, source_file)
+
+    def file_read_bin(self, source_path, source_file):
+        return self.afs.file_read_bin(source_path, source_file)
 
     def file_remove(self, file_path, file_name):
         self.afs.file_remove(file_path, file_name)
