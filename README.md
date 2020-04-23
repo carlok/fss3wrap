@@ -40,8 +40,8 @@ You can use the [test file](https://github.com/carlok/fss3wrap) on GitHub as doc
 
 Files needed to begin:
 * `local/LICENSE`
-* `remote/out_LICENSE`
-* `remote/out2_LICENSE`
+* `remote/extra_sub_folder/4x4.jpg/`
+and two AWS S3 Bucket
 
 
 ## Author
