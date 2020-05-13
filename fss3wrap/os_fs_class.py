@@ -39,14 +39,14 @@ class OsFsClass(AbstractFSClass):
 
     def file_descriptor_copy(self, source_file_descriptor,
                              destination_path, destination_file):
-        source_path, source_file = ntpath.split(source_file_descriptor.name)
 
         self.os_fs.makedirs(destination_path, recreate=True)
 
         destination_base_root = self.fs_root[7:]
 
-        shutil.copyfile('{}/{}'.format(source_path, source_file),
-                        '{}/{}'.format(destination_base_root + '/' + destination_path, destination_file))
+        f = open('{}/{}'.format(destination_base_root + '/' + destination_path, destination_file), 'wb')
+        f.write(source_file_descriptor.read())
+
 
     def file_fd(self, file_path, file_name):
         priv_os_fs = open_fs(self.fs_root + file_path)
