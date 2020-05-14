@@ -88,7 +88,6 @@ def test_file_descriptor_copy():
 
 def test_filelike_copy():
     try:
-
         destination_path = 'extra_sub_folder'
         destination_file = 'foo'
         b = io.BytesIO(b'bar')

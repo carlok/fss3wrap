@@ -1,6 +1,7 @@
 # Common commands 
 
 ```
+pip3 install fs fs-s3fs autopep8 pytest m2r twine python-dotenv wheel docutils===0.15
 autopep8 --in-place --aggressive --recursive <folder>
 pytest --cache-clear --color=yes --cov=fss3wrap/ -s -v
 m2r README.md

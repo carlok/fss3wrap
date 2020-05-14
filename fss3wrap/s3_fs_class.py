@@ -34,7 +34,7 @@ class S3FsClass(AbstractFSClass):
     def file_descriptor_copy(self, source_file_descriptor,
                              destination_path, destination_file):
         self.s3_fs.upload('{}/{}'.format(destination_path,
-                                             destination_file), source_file_descriptor)
+                                         destination_file), source_file_descriptor)
 
     def file_fd(self, file_path, file_name):
         return self.s3_fs.open('{}/{}'.format(file_path, file_name))
