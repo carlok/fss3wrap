@@ -76,6 +76,8 @@ class OsFsClass(AbstractFSClass):
     def reinit(self, bucket=None, rootdir=None):
         self.fs_root = 'osfs://'
 
-        self.fs_root = self.fs_root + (rootdir + '/') if rootdir is not None else ''
-        self.fs_root = self.fs_root + (bucket + '/') if bucket is not None else ''
+        self.fs_root = self.fs_root + \
+            (rootdir + '/') if rootdir is not None else ''
+        self.fs_root = self.fs_root + \
+            (bucket + '/') if bucket is not None else ''
         self.os_fs = open_fs(self.fs_root)

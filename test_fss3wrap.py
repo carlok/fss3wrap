@@ -114,7 +114,6 @@ def test_file_fd_custom_bucket_bin():
     try:
         custom_bucket = pytest.aws_bucket_2
 
-
         destination_path = 'extra_sub_folder'
         destination_file = '4x4.jpg'
         pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, custom_bucket, pytest.fs_path_remote)
