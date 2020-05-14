@@ -46,8 +46,8 @@ Files needed to begin:
 
 
 * ``local/LICENSE``
-* ``remote/out_LICENSE``
-* ``remote/out2_LICENSE``
+* ``remote/extra_sub_folder/4x4.jpg``
+  and two AWS S3 Bucket
 
 Author
 ------
