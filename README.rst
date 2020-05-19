@@ -2,7 +2,7 @@
 fss3wrap
 ========
 
-A python class to wrap `fs <https://github.com/PyFilesystem/pyfilesystem2>`_ and `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_.
+A python class to wrap `fs <https://github.com/PyFilesystem/pyfilesystem2>`_ and `fs-s3fs-ng <https://github.com/mrk-its/s3fs>`_.
 
 With this library, you can use the same code to interact with a traditional file system or an AWS S3 bucket.
 Its interface class exposes 7 common methods, not every single file system operation, of course.
