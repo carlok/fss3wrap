@@ -16,7 +16,9 @@ pip3 install fss3wrap
 
 ## Usage
 
-Use the `env_example` and create your own `.env` file (or put the same variables in your environment in some other way), then set `AWS_S3_USED` to `True` or `False` as you need it: once in your script with a single class or use it with two `Afs` classes
+Use the `env_example` and create your own `.env` file (or put the same variables in your environment in some other way), then set `AWS_S3_USED` to `True` or `False` as you need it: once in your script with a single class or use it with two `Afs` classes.
+
+Env files are not read directly: they are used for testing purposes, it's user duty to call methods with proper values, with or without envs.
 
 You can use the [test file](https://github.com/carlok/fss3wrap) on GitHub as documentation of the methods.
 
@@ -25,6 +27,7 @@ You can use the [test file](https://github.com/carlok/fss3wrap) on GitHub as doc
 
 * `bytes_write(destination_path, destination_file, mbytes)`
 * `directory_list(path)`
+* `download(relative_source_path, destination_path, filename, mode)`
 * `file_copy(source_path, source_file)`
 * `file_descriptor_copy(source_file_descriptor, destination_path, destination_file)`
 * `file_fd(file_path, file_name)`
@@ -39,8 +42,9 @@ You can use the [test file](https://github.com/carlok/fss3wrap) on GitHub as doc
 ## A note on the tests
 
 Files needed to begin:
-* `local/LICENSE`
-* `remote/extra_sub_folder/4x4.jpg`
+* `local/LICENSE` (text)
+* `remote/extra_sub_folder/4x4.jpg` (binary)
+* `remote/extra_sub_folder/out_LICENSE` (text)
 and two AWS S3 Bucket
 
 

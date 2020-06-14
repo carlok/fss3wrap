@@ -23,6 +23,16 @@ class S3FsClass(AbstractFSClass):
     def directory_list(self, path):
         return self.s3_fs.listdir(path)
 
+    def download(self, source_path, dest_path, filename, mode):
+        if mode == 'b':
+            file_content = self.file_read_bin(source_path, filename)
+        else:
+            file_content = self.file_read(source_path, filename)
+        path = dest_path + '/' + filename
+        f = open(path, 'w+{}'.format(mode))
+        f.write(file_content)
+        f.close()
+
     def file_copy(self, source_path, source_file,
                   destination_path, destination_file):
         self.s3_fs.makedirs(destination_path, recreate=True)
