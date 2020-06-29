@@ -9,8 +9,8 @@ import pytest
 
 # [x] FS [x] S3 : test_bytes_write
 # [x] FS [x] S3 : test_directory_list
-# [ ] FS [ ] S3: test_download_binary
-# [ ] FS [ ] S3: test_download_text
+# [x] FS [x] S3: test_download_binary
+# [x] FS [x] S3: test_download_text
 # [x] FS_BIN [x] FS_TXT [x] S3_BIN [x] S3_TXT : test_file_copy
 # [x] FS_BIN [x] FS_TXT [x] S3_BIN [x] S3_TXT : test_file_descriptor_copy
 # [x] FS_BIN [x] S3_BIN : test_file_fd_bin
@@ -221,3 +221,54 @@ def test_reinit():
             destination_file)
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
+
+#def test_tmp1_reinit():
+#    try:
+#        pytest.afs.reinit(False, pytest.s3_parameters, bucket='aaa')
+#
+#        source_path = pytest.fs_path_local
+#        source_file = 'LICENSE'
+#        destination_path = 'extra_sub_folder'
+#        destination_file = 'out_LICENSE'
+#
+#        pytest.afs.file_copy(
+#            source_path,
+#            source_file,
+#            destination_path,
+#            destination_file)
+#    except BaseException as e:
+#        pytest.fail("BaseException => {}".format(str(e)))
+#
+#def test_tmp2_reinit():
+#    try:
+#        pytest.afs.reinit(False, pytest.s3_parameters, rootdir='aaa')
+#
+#        source_path = pytest.fs_path_local
+#        source_file = 'LICENSE'
+#        destination_path = 'extra_sub_folder'
+#        destination_file = 'out_LICENSE'
+#
+#        pytest.afs.file_copy(
+#            source_path,
+#            source_file,
+#            destination_path,
+#            destination_file)
+#    except BaseException as e:
+#        pytest.fail("BaseException => {}".format(str(e)))
+#
+#def test_tmp3_reinit():
+#    try:
+#        pytest.afs.reinit(False, pytest.s3_parameters, bucket='bbb', rootdir='/tmp/remote/yyy')
+#
+#        source_path = pytest.fs_path_local
+#        source_file = 'LICENSE'
+#        destination_path = 'extra_sub_folder'
+#        destination_file = 'out_LICENSE'
+#
+#        pytest.afs.file_copy(
+#            source_path,
+#            source_file,
+#            destination_path,
+#            destination_file)
+#    except BaseException as e:
+#        pytest.fail("BaseException => {}".format(str(e)))

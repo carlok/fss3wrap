@@ -5,6 +5,8 @@ from fs.base import FS
 from fs.copy import copy_file
 
 import ntpath
+import os
+import pathlib
 import shutil
 
 
@@ -84,9 +86,24 @@ class OsFsClass(AbstractFSClass):
 
     def reinit(self, bucket=None, rootdir=None):
         self.fs_root = 'osfs://'
+        root_path_full = ''
 
-        self.fs_root = self.fs_root + \
-            (rootdir + '/') if rootdir is not None else ''
-        self.fs_root = self.fs_root + \
-            (bucket + '/') if bucket is not None else ''
+        if rootdir is not None and bucket is not None:
+            self.os_fs = open_fs(self.fs_root)
+            pathlib.Path('/' + rootdir + '/' + bucket + '/').mkdir(parents=True, exist_ok=True)
+            self.fs_root = self.fs_root + rootdir + '/'
+            self.fs_root = self.fs_root + bucket + '/'
+        else:
+            if rootdir is not None:
+                root_path_full = rootdir + '/'
+                self.os_fs = open_fs(self.fs_root)
+                pathlib.Path(root_path_full).mkdir(parents=True, exist_ok=True)
+                self.fs_root = self.fs_root + root_path_full + '/'
+
+            if bucket is not None:
+                bucket_path_full = bucket + '/'
+                self.os_fs = open_fs(self.fs_root)
+                pathlib.Path(bucket_path_full).mkdir(parents=True, exist_ok=True)
+                self.fs_root = self.fs_root + bucket_path_full + '/'
+
         self.os_fs = open_fs(self.fs_root)

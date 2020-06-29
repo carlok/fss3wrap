@@ -49,8 +49,12 @@ Files needed to begin:
 
 
 * ``local/LICENSE`` (text)
+* ``local/extra_sub_folder/4x4.jpg`` (binary)
+* ``local/extra_sub_folder/out_LICENSE`` (text)
 * ``remote/extra_sub_folder/4x4.jpg`` (binary)
 * ``remote/extra_sub_folder/out_LICENSE`` (text)
+* ``remote_reinit/extra_sub_folder/4x4.jpg`` (binary)
+* ``remote_reinit/extra_sub_folder/out_LICENSE`` (text)
   and two AWS S3 Bucket
 
 Author
