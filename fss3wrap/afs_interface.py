@@ -13,8 +13,8 @@ class Afs():
     def bytes_write(self, destination_path, destination_file, mbytes):
         self.afs.bytes_write(destination_path, destination_file, mbytes)
 
-    def directory_list(self, path):
-        return self.afs.directory_list(path)
+    #def directory_list(self, path):
+     #   return self.afs.directory_list(path)
 
     def download(self, source_path, dest_path, filename, mode):
         return self.afs.download(source_path, dest_path, filename, mode)
