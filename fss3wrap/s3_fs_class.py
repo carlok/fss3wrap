@@ -21,6 +21,7 @@ class S3FsClass(AbstractFSClass):
             '{}/{}'.format(destination_path, destination_file), mbytes)
 
     def directory_list(self, path):
+        print('ciao')
         return self.s3_fs.listdir(path)
 
     def download(self, source_path, dest_path, filename, mode):
