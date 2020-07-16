@@ -6,6 +6,7 @@ with open("README.rst", "rt") as f:
     DESCRIPTION = f.read()
 
 url = 'https://github.com/carlok/fss3wrap'
+url = 'https://github,com/barloccia/fss3wrap'
 version='0.1.20'
 
 setup(
