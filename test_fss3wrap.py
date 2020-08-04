@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from fss3wrap.afs_interface import Afs
 
 import pytest
-import conftest
+
 
 
 # [x] FS [x] S3 : test_bytes_write
@@ -44,7 +44,7 @@ pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pyte
 pytest.afs_b2 = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_2, pytest.fs_path_remote)
 pytest.afs_local = Afs(pytest.s3_used, pytest.s3_parameters, '', pytest.fs_path_local)
 
-def test_bytes_write(cmdopt):
+def test_bytes_write():
     try:
         destination_path = 'extra_sub_folder'
         destination_file = 'destination_file'
