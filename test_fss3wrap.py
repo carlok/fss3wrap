@@ -327,8 +327,10 @@ def setup_module(module):
 
 
 def teardown_module(module):
+    if not pytest.s3_used:
+        shutil.rmtree(pytest.fs_path_remote)
     shutil.rmtree(pytest.fs_path_local)
-    shutil.rmtree(pytest.fs_path_remote)
+
 
 
 #def test_tmp1_reinit():

@@ -16,8 +16,6 @@ class OsFsClass(AbstractFSClass):
 
     fs_root = None
     os_fs = None
-    bucket = None
-    root = None
 
     def __init__(self, bucket=None, rootdir=None):
         self.reinit(bucket, rootdir)

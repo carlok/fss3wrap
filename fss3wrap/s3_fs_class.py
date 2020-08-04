@@ -27,10 +27,13 @@ class S3FsClass(AbstractFSClass):
         return self.s3_fs.listdir(path)
 
     def directory_list_v2(self, path, filter):
+        session = boto3.Session(aws_access_key_id=self.s3_parameters['access_key_id'],
+                                aws_secret_access_key=self.s3_parameters['secret_access_key'])
+        s3_obj = session.client('s3')
         # Return max 1000keys
         prefix, suffix = filter.split('*')[0], filter.split('*')[1]
         kwargs = {'Bucket': self.bucket, 'StartAfter': path, 'Prefix': path+prefix}
-        resp = self.s3_obj.list_objects_v2(**kwargs)
+        resp = s3_obj.list_objects_v2(**kwargs)
         paths = [elem['Key'] for elem in resp['Contents'] if elem['Key'].endswith(suffix)]
         return paths
 
@@ -99,12 +102,8 @@ class S3FsClass(AbstractFSClass):
                 bucket if bucket is not None else s3_parameters['bucket']
             )
         )
+        self.s3_parameters = s3_parameters
+        self.bucket = bucket
 
-        session = boto3.Session(aws_access_key_id=s3_parameters['access_key_id'],
-                                aws_secret_access_key=s3_parameters['secret_access_key'])
-        self.s3_obj = session.client('s3')
-        if bucket is not None:
-            self.bucket = bucket
-        else:
-            self.bucket = 'waterview.cameranode.upload'
+
 
