@@ -9,3 +9,4 @@ dist/
 go.sh
 tmp/
 venv/
+.idea/

@@ -42,7 +42,7 @@ pytest.s3_used = (os.getenv('AWS_S3_USED') == 'True')
 
 pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pytest.fs_path_remote)
 pytest.afs_b2 = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_2, pytest.fs_path_remote)
-pytest.afs_local = Afs(pytest.s3_used, pytest.s3_parameters, '', pytest.fs_path_local)
+pytest.afs_local = Afs(False, pytest.s3_parameters, '', pytest.fs_path_local)
 
 def test_bytes_write():
     try:
@@ -327,8 +327,8 @@ def setup_module(module):
 
 
 def teardown_module(module):
-    shutil.rmtree(pytest.fs_path_local, ignore_errors=True)
-    shutil.rmtree(pytest.fs_path_remote, ignore_errors=True)
+    shutil.rmtree(pytest.fs_path_local)
+    shutil.rmtree(pytest.fs_path_remote)
 
 
 #def test_tmp1_reinit():
