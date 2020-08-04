@@ -4,16 +4,20 @@ from fs import open_fs
 from fs.base import FS
 from fs.copy import copy_file
 
+
 import ntpath
 import os
 import pathlib
 import shutil
+import glob
 
 
 class OsFsClass(AbstractFSClass):
 
     fs_root = None
     os_fs = None
+    bucket = None
+    root = None
 
     def __init__(self, bucket=None, rootdir=None):
         self.reinit(bucket, rootdir)
@@ -25,6 +29,12 @@ class OsFsClass(AbstractFSClass):
 
     def directory_list(self, path):
         return self.os_fs.listdir(path)
+
+    def directory_list_v2(self, path, filter):
+        os_fs = self.fs_root.replace('osfs://', '')
+        target = os.path.join(os_fs, path, filter)
+        paths = [path for path in glob.glob(target)]
+        return paths
 
     def download(self, source_path, dest_path, filename, mode):
         if mode == 'b':

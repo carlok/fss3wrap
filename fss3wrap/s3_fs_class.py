@@ -1,8 +1,10 @@
 from fss3wrap.abstract_fs_class import AbstractFSClass
 
 from fs import open_fs
+from fs.walk import Walker
 from fs.base import FS
 from fs.copy import copy_file
+import boto3
 
 import ntpath
 
@@ -11,7 +13,8 @@ class S3FsClass(AbstractFSClass):
 
     os_fs = None
     s3_fs = None
-
+    s3_obj = None
+    bucket = None
     def __init__(self, s3_parameters, bucket=None, rootdir=None):
         self.reinit(s3_parameters, bucket, rootdir)
 
@@ -21,8 +24,15 @@ class S3FsClass(AbstractFSClass):
             '{}/{}'.format(destination_path, destination_file), mbytes)
 
     def directory_list(self, path):
-        return None
-        #return self.s3_fs.listdir(path)
+        return self.s3_fs.listdir(path)
+
+    def directory_list_v2(self, path, filter):
+        # Return max 1000keys
+        prefix, suffix = filter.split('*')[0], filter.split('*')[1]
+        kwargs = {'Bucket': self.bucket, 'StartAfter': path, 'Prefix': path+prefix}
+        resp = self.s3_obj.list_objects_v2(**kwargs)
+        paths = [elem['Key'] for elem in resp['Contents'] if elem['Key'].endswith(suffix)]
+        return paths
 
     def download(self, source_path, dest_path, filename, mode):
         if mode == 'b':
@@ -89,3 +99,12 @@ class S3FsClass(AbstractFSClass):
                 bucket if bucket is not None else s3_parameters['bucket']
             )
         )
+
+        session = boto3.Session(aws_access_key_id=s3_parameters['access_key_id'],
+                                aws_secret_access_key=s3_parameters['secret_access_key'])
+        self.s3_obj = session.client('s3')
+        if bucket is not None:
+            self.bucket = bucket
+        else:
+            self.bucket = 'waterview.cameranode.upload'
+

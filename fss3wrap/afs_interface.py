@@ -7,14 +7,18 @@ class Afs():
     afs = None
     s3 = False
 
+
     def __init__(self, s3, s3_parameters, bucket=None, rootdir=None):
         self.reinit(s3, s3_parameters, bucket, rootdir)
 
     def bytes_write(self, destination_path, destination_file, mbytes):
         self.afs.bytes_write(destination_path, destination_file, mbytes)
 
-    #def directory_list(self, path):
-     #   return self.afs.directory_list(path)
+    def directory_list(self, path):
+        return self.afs.directory_list(path)
+
+    def directory_list_v2(self, path, filter):
+        return self.afs.directory_list_v2(path, filter)
 
     def download(self, source_path, dest_path, filename, mode):
         return self.afs.download(source_path, dest_path, filename, mode)

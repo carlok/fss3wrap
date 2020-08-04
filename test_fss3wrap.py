@@ -1,10 +1,12 @@
 import io
 import os
+import shutil
 from dotenv import load_dotenv
 
 from fss3wrap.afs_interface import Afs
 
 import pytest
+import conftest
 
 
 # [x] FS [x] S3 : test_bytes_write
@@ -39,8 +41,10 @@ pytest.s3_parameters = {
 pytest.s3_used = (os.getenv('AWS_S3_USED') == 'True')
 
 pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pytest.fs_path_remote)
+pytest.afs_b2 = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_2, pytest.fs_path_remote)
+pytest.afs_local = Afs(pytest.s3_used, pytest.s3_parameters, '', pytest.fs_path_local)
 
-def test_bytes_write():
+def test_bytes_write(cmdopt):
     try:
         destination_path = 'extra_sub_folder'
         destination_file = 'destination_file'
@@ -56,6 +60,16 @@ def test_directory_list():
         destination_path = 'extra_sub_folder'
 
         print(pytest.afs.directory_list(destination_path))
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+
+def test_directory_list_v2():
+    try:
+        destination_path = 'extra_sub_folder/'
+        filter = '4*.jpg'
+        res = pytest.afs.directory_list_v2(destination_path, filter)
+
+        assert res == ['extra_sub_folder/4x4.jpg'] if pytest.s3_used else ['/tmp/remote/fss3wrap1/extra_sub_folder/4x4.jpg']
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
 
@@ -160,7 +174,7 @@ def test_file_fd_custom_bucket_bin():
         # reset
         pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pytest.fs_path_remote)
     except BaseException as e:
-        pytest.fail("BaseException => {}".format(str(e)))
+        pytest.fail("{}".format(str(e)))
 
 
 def test_file_md5():
@@ -221,6 +235,101 @@ def test_reinit():
             destination_file)
     except BaseException as e:
         pytest.fail("BaseException => {}".format(str(e)))
+
+
+def setup_module(module):
+    # Create both local and remote folders
+    try:
+        os.mkdir(pytest.fs_path_local)
+        os.mkdir(pytest.fs_path_remote)
+    except OSError:
+        print("Creation of the directories failed. Maybe it already exists")
+    else:
+        print("Successfully created the directories")
+    # SETTING UP LOCAL FILES
+    source_path = './local/'
+    source_file = 'LICENSE'
+    destination_path = ''
+    destination_file = 'LICENSE'
+    try:
+        pytest.afs_local.file_copy(
+            source_path,
+            source_file,
+            destination_path,
+            destination_file)
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+    source_path = './local/'
+    source_file = '4x4.jpg'
+    destination_path = 'extra_sub_folder'
+    destination_file = '4x4.jpg'
+    try:
+        pytest.afs_local.file_copy(
+            source_path,
+            source_file,
+            destination_path,
+            destination_file)
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+
+    # SETTING UP REMOTE FILES
+    # bucket 1
+    source_path = './local/'
+    source_file = 'LICENSE'
+    destination_path = 'extra_sub_folder'
+    destination_file = 'out_LICENSE'
+    try:
+        pytest.afs.file_copy(
+            source_path,
+            source_file,
+            destination_path,
+            destination_file)
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+    source_path = './local/'
+    source_file = '4x4.jpg'
+    destination_path = 'extra_sub_folder'
+    destination_file = '4x4.jpg'
+    try:
+        pytest.afs.file_copy(
+            source_path,
+            source_file,
+            destination_path,
+            destination_file)
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+
+    # bucket 2
+    source_path = './local/'
+    source_file = 'LICENSE'
+    destination_path = 'extra_sub_folder'
+    destination_file = 'out_LICENSE'
+    try:
+        pytest.afs_b2.file_copy(
+            source_path,
+            source_file,
+            destination_path,
+            destination_file)
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+    source_path = './local/'
+    source_file = '4x4.jpg'
+    destination_path = 'extra_sub_folder'
+    destination_file = '4x4.jpg'
+    try:
+        pytest.afs_b2.file_copy(
+            source_path,
+            source_file,
+            destination_path,
+            destination_file)
+    except BaseException as e:
+        pytest.fail("BaseException => {}".format(str(e)))
+
+
+def teardown_module(module):
+    shutil.rmtree(pytest.fs_path_local, ignore_errors=True)
+    shutil.rmtree(pytest.fs_path_remote, ignore_errors=True)
+
 
 #def test_tmp1_reinit():
 #    try:

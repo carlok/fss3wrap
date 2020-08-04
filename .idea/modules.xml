@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/fss3wrap.iml" filepath="$PROJECT_DIR$/.idea/fss3wrap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../storage_worker/.idea/storage_worker.iml" filepath="$PROJECT_DIR$/../storage_worker/.idea/storage_worker.iml" />
     </modules>
   </component>
 </project>
