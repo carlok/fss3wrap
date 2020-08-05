@@ -8,7 +8,6 @@ from fss3wrap.afs_interface import Afs
 import pytest
 
 
-
 # [x] FS [x] S3 : test_bytes_write
 # [x] FS [x] S3 : test_directory_list
 # [x] FS [x] S3: test_download_binary
@@ -174,7 +173,7 @@ def test_file_fd_custom_bucket_bin():
         # reset
         pytest.afs = Afs(pytest.s3_used, pytest.s3_parameters, pytest.aws_bucket_1, pytest.fs_path_remote)
     except BaseException as e:
-        pytest.fail("{}".format(str(e)))
+        pytest.fail("BaseException => {}".format(str(e)))
 
 
 def test_file_md5():

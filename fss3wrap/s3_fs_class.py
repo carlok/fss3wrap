@@ -1,19 +1,16 @@
 from fss3wrap.abstract_fs_class import AbstractFSClass
 
 from fs import open_fs
-from fs.walk import Walker
 from fs.base import FS
 from fs.copy import copy_file
 import boto3
 
 import ntpath
 
-
 class S3FsClass(AbstractFSClass):
 
     os_fs = None
     s3_fs = None
-    s3_obj = None
     bucket = None
     def __init__(self, s3_parameters, bucket=None, rootdir=None):
         self.reinit(s3_parameters, bucket, rootdir)
@@ -103,7 +100,7 @@ class S3FsClass(AbstractFSClass):
             )
         )
         self.s3_parameters = s3_parameters
-        self.bucket = bucket
+        self.bucket = bucket if bucket is not None else s3_parameters['bucket']
 
 
 

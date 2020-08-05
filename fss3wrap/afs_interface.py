@@ -7,7 +7,6 @@ class Afs():
     afs = None
     s3 = False
 
-
     def __init__(self, s3, s3_parameters, bucket=None, rootdir=None):
         self.reinit(s3, s3_parameters, bucket, rootdir)
 

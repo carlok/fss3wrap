@@ -4,13 +4,11 @@ from fs import open_fs
 from fs.base import FS
 from fs.copy import copy_file
 
-
 import ntpath
 import os
 import pathlib
 import shutil
 import glob
-
 
 class OsFsClass(AbstractFSClass):
 
