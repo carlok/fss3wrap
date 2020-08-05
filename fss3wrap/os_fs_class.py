@@ -8,7 +8,7 @@ import ntpath
 import os
 import pathlib
 import shutil
-
+import glob
 
 class OsFsClass(AbstractFSClass):
 
@@ -25,6 +25,12 @@ class OsFsClass(AbstractFSClass):
 
     def directory_list(self, path):
         return self.os_fs.listdir(path)
+
+    def directory_list_v2(self, path, filter):
+        os_fs = self.fs_root.replace('osfs://', '')
+        target = os.path.join(os_fs, path, filter)
+        paths = [path for path in glob.glob(target)]
+        return paths
 
     def download(self, source_path, dest_path, filename, mode):
         if mode == 'b':

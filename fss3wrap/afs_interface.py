@@ -16,6 +16,9 @@ class Afs():
     def directory_list(self, path):
         return self.afs.directory_list(path)
 
+    def directory_list_v2(self, path, filter):
+        return self.afs.directory_list_v2(path, filter)
+
     def download(self, source_path, dest_path, filename, mode):
         return self.afs.download(source_path, dest_path, filename, mode)
 

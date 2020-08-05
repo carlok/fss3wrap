@@ -11,6 +11,10 @@ class AbstractFSClass(ABC):
         pass
 
     @abstractmethod
+    def directory_list_v2(self, path, filter):
+        pass
+
+    @abstractmethod
     def download(self, source_path, dest_path, filename, mode):
         pass
 
